@@ -28,47 +28,49 @@ int main(int argc, char* argv[])
   }
 }
 
-void read_array(int* array, int n)
-{
+void read_array(int* array, int n){
   for (int i = 0; i < n; i++) {
-    scanf("%d", &(array[i]));
+    scanf("%d", &array[i]);
   }
-}
 
-void print_array(int* array, int n)
-{
+}
+void print_array(int* array,int n){
   for (int i = 0; i < n; i++) {
-    printf("%d ", array[i]);
+    if (array[i+1] == '\0') {
+      printf("%d", array[i]);
+    }
+    else {
+      printf("%d, ", array[i]);
+    }
   }
-  printf("\n");
+  printf("\n" );
 }
-
-void merge(int* first_array, int n_first, int* second_array, int n_second, int* merged_array)
-{
+void merge(int* first_array, int n_first, int* last_array, int n_last, int* merged_array){
   int count1 = 0;
-int count2 = 0;
-int merge_count = 0;
+  int count2 = 0;
+  int merge_count = 0;
 
-while (count1 < n_first && count2 < n_second) {
-  if (first_array[count1] < second_array[count2]) {
+  while (count1 < n_first && count2 < n_last) {
+    if (first_array[count1] < last_array[count2]) {
+      merged_array[merge_count] = first_array[count1];
+      count1++;
+    }
+    else
+    {
+      merged_array[merge_count] = last_array[count2];
+      count2++;
+    }
+    merge_count++;
+  }
+
+  while (count1 < n_first) {
     merged_array[merge_count] = first_array[count1];
+    merge_count++;
     count1++;
   }
-  else{
-    merged_array[merge_count] = second_array[count2];
+  while (count2 < n_last) {
+    merged_array[merge_count] = last_array[count2];
+    merge_count++;
     count2++;
   }
-  merge_count++;
-}
-
-while (count1<n_first) {
-  merged_array[merge_count] = first_array[count1];
-  merge_count++;
-  count1++;
-}
-while (count2<n_second) {
-  merged_array[merge_count] = second_array[count2];
-  merge_count++;
-  count2++;
-}
 }
